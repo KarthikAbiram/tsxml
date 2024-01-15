@@ -1,0 +1,109 @@
+from tsxml import main
+import pprint
+
+
+def test_numeric_array():
+    xml_input = """
+    <?TS version="2019 (19.0.0.170)"?>
+    <Prop Name='MyContainer' Type='Obj' Flags='0x0'>
+        <Prop Name='MyNumericArray' Type='Array' LBound='[0]' HBound='[5]' ElementType='Number' Flags='0x0'>
+            <Value ID='[0]'>0</Value>
+            <Value ID='[1]'>0</Value>
+            <Value ID='[2]'>0</Value>
+            <Value ID='[3]'>0</Value>
+            <Value ID='[4]'>0</Value>
+            <Value ID='[5]'>0</Value>
+        </Prop>
+        <Prop Name='MyNumber' Type='Number' Flags='0x0'>
+            <Value>1</Value>
+        </Prop>
+        <Prop Name='MyString' Type='String' Flags='0x0'>
+            <Value>xTLDR.com</Value>
+        </Prop>
+    </Prop>
+    """
+    # Parse
+    result = main.parse(xml_input)
+    # pprint.pprint(result, indent=2)
+
+    exp_result = {
+        "MyContainer": {
+            "MyNumber": "1",
+            "MyNumericArray": ["0", "0", "0", "0", "0", "0"],
+            "MyString": "xTLDR.com",
+        }
+    }
+
+    assert result == exp_result
+
+
+def test_container_array():
+    xml_input = """
+    <?TS version="2019 (19.0.0.170)"?>
+    <Prop Name='MyContainer' Type='Obj' Flags='0x0'>
+        <Prop Name='MyNumber' Type='Number' Flags='0x0'>
+            <Value>1</Value>
+        </Prop>
+        <Prop Name='MyString' Type='String' Flags='0x0'>
+            <Value>xTLDR.com</Value>
+        </Prop>
+        <Prop Name='ContainerArray' Type='Array' LBound='[0]' HBound='[2]' ElementType='Obj' Flags='0x0'>
+            <Value ID='[0]'>
+                <Prop Type='Obj' Flags='0x0'>
+                    <Prop Name='Num_1' Type='Number' Flags='0x0'>
+                        <Value>0</Value>
+                    </Prop>
+                    <Prop Name='Str_1' Type='String' Flags='0x0'>
+                        <Value>Zero</Value>
+                    </Prop>
+                    <Prop Name='Bool_1' Type='Boolean' Flags='0x0'>
+                        <Value>True</Value>
+                    </Prop>
+                </Prop>
+            </Value>
+            <Value ID='[1]'>
+                <Prop Type='Obj' Flags='0x0'>
+                    <Prop Name='Num_1' Type='Number' Flags='0x0'>
+                        <Value>1</Value>
+                    </Prop>
+                    <Prop Name='Str_1' Type='String' Flags='0x0'>
+                        <Value>One</Value>
+                    </Prop>
+                    <Prop Name='Bool_1' Type='Boolean' Flags='0x0'>
+                        <Value>False</Value>
+                    </Prop>
+                </Prop>
+            </Value>
+            <Value ID='[2]'>
+                <Prop Type='Obj' Flags='0x0'>
+                    <Prop Name='Num_1' Type='Number' Flags='0x0'>
+                        <Value>2</Value>
+                    </Prop>
+                    <Prop Name='Str_1' Type='String' Flags='0x0'>
+                        <Value>Two</Value>
+                    </Prop>
+                    <Prop Name='Bool_1' Type='Boolean' Flags='0x0'>
+                        <Value>True</Value>
+                    </Prop>
+                </Prop>
+            </Value>
+        </Prop>
+    </Prop>
+    """
+    # Parse
+    result = main.parse(xml_input)
+    # pprint.pprint(result, indent=2)
+
+    exp_result = {
+        "MyContainer": {
+            "ContainerArray": [
+                {"Bool_1": "True", "Num_1": "0", "Str_1": "Zero"},
+                {"Bool_1": "False", "Num_1": "1", "Str_1": "One"},
+                {"Bool_1": "True", "Num_1": "2", "Str_1": "Two"},
+            ],
+            "MyNumber": "1",
+            "MyString": "xTLDR.com",
+        }
+    }
+
+    assert result == exp_result

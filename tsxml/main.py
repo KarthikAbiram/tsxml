@@ -2,25 +2,31 @@
 import xmltodict
 import pprint
 
+from .types import basic, object, array
+
 
 def postprocessor(path, key, value):
-    return key, value
+    """
+    Post processor callback of xmltodict, which we use to further process the TestStand XML.
+
+    This would be called several times while parsing the XML.
+    We are only interested in manipulating the data when we get the key as "Prop"
+    """
+    # Initialize
+    result = {"key": key, "value": value}
+
+    if key == "Prop":
+        data_type = value["@Type"]
+        if data_type in ["String", "Number", "Boolean"]:
+            result = basic.parse(path, key, value)
+        elif data_type in ["Obj"]:
+            result = object.parse(path, key, value)
+        elif data_type in ["Array"]:
+            result = array.parse(path, key, value)
+
+    return result["key"], result["value"]
 
 
 def parse(xml: str) -> dict:
-    my_dict = xmltodict.parse(xml, postprocessor=postprocessor)
-    return my_dict
-
-
-if __name__ == "__main__":
-    # For dev/debug
-    # Open the file and read the contents
-    with open(r"tests\inputs\sample.xml", "r", encoding="utf-8") as file:
-        my_xml = file.read()
-
-    # Use xmltodict to parse and convert XML to dict
-    # XML document
-    my_dict = parse(my_xml)
-
-    # Print the dictionary
-    pprint.pprint(my_dict, indent=2)
+    tsxml_dict = xmltodict.parse(xml, postprocessor=postprocessor)
+    return tsxml_dict
