@@ -1,0 +1,6 @@
+[project]
+name = "tsxml"
+version = "0.0.1"
+
+[tool.setuptools]
+py-modules = ["tsxml"]
