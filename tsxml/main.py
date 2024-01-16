@@ -2,7 +2,7 @@
 import xmltodict
 import pprint
 
-from .types import basic, object, array
+from .types import object, array, string, number, boolean
 
 
 def postprocessor(path, key, value):
@@ -17,8 +17,12 @@ def postprocessor(path, key, value):
 
     if key == "Prop":
         data_type = value["@Type"]
-        if data_type in ["String", "Number", "Boolean"]:
-            result = basic.parse(path, key, value)
+        if data_type in ["String"]:
+            result = string.parse(path, key, value)
+        elif data_type in ["Number"]:
+            result = number.parse(path, key, value)
+        elif data_type in ["Boolean"]:
+            result = boolean.parse(path, key, value)
         elif data_type in ["Obj"]:
             result = object.parse(path, key, value)
         elif data_type in ["Array"]:

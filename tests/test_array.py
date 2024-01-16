@@ -28,10 +28,48 @@ def test_numeric_array():
 
     exp_result = {
         "MyContainer": {
-            "MyNumber": "1",
-            "MyNumericArray": ["0", "0", "0", "0", "0", "0"],
+            "MyNumber": 1.0,
+            "MyNumericArray": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
             "MyString": "xTLDR.com",
         }
+    }
+
+    assert result == exp_result
+
+
+def test_boolean_array():
+    xml_input = """
+    <?TS version="2019 (19.0.0.170)"?>
+    <Prop Name='MyBoolArray' Type='Array' LBound='[0]' HBound='[9]' ElementType='Boolean' Flags='0x0'>
+        <Value ID='[0]'>True</Value>
+        <Value ID='[1]'>False</Value>
+        <Value ID='[2]'>True</Value>
+        <Value ID='[3]'>True</Value>
+        <Value ID='[4]'>False</Value>
+        <Value ID='[5]'>False</Value>
+        <Value ID='[6]'>False</Value>
+        <Value ID='[7]'>False</Value>
+        <Value ID='[8]'>False</Value>
+        <Value ID='[9]'>False</Value>
+    </Prop>
+    """
+    # Parse
+    result = main.parse(xml_input)
+    pprint.pprint(result, indent=2)
+
+    exp_result = {
+        "MyBoolArray": [
+            True,
+            False,
+            True,
+            True,
+            False,
+            False,
+            False,
+            False,
+            False,
+            False,
+        ]
     }
 
     assert result == exp_result
@@ -97,11 +135,11 @@ def test_container_array():
     exp_result = {
         "MyContainer": {
             "ContainerArray": [
-                {"Bool_1": "True", "Num_1": "0", "Str_1": "Zero"},
-                {"Bool_1": "False", "Num_1": "1", "Str_1": "One"},
-                {"Bool_1": "True", "Num_1": "2", "Str_1": "Two"},
+                {"Bool_1": True, "Num_1": 0.0, "Str_1": "Zero"},
+                {"Bool_1": False, "Num_1": 1.0, "Str_1": "One"},
+                {"Bool_1": True, "Num_1": 2.0, "Str_1": "Two"},
             ],
-            "MyNumber": "1",
+            "MyNumber": 1.0,
             "MyString": "xTLDR.com",
         }
     }
