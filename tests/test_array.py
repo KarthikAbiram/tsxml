@@ -1,12 +1,13 @@
-from tsxml import main
 import pprint
+from tsxml import main
 
 
 def test_numeric_array():
     xml_input = """
     <?TS version="2019 (19.0.0.170)"?>
     <Prop Name='MyContainer' Type='Obj' Flags='0x0'>
-        <Prop Name='MyNumericArray' Type='Array' LBound='[0]' HBound='[5]' ElementType='Number' Flags='0x0'>
+        <Prop Name='MyNumericArray' Type='Array' LBound='[0]' HBound='[5]' ElementType='Number'
+        Flags='0x0'>
             <Value ID='[0]'>0</Value>
             <Value ID='[1]'>0</Value>
             <Value ID='[2]'>0</Value>

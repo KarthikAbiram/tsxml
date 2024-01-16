@@ -1,8 +1,24 @@
-# Import the required modules
+""" Module for parsing TestStand XML to Python dictionary"""
 import xmltodict
-import pprint
 
-from .types import object, array, string, number, boolean
+from .types import container, array, string, number, boolean
+
+
+def parse(xml: str) -> dict:
+    """Converts the given TestStand XML string to Python dictionary
+
+    Args:
+        xml (str): TestStand XML string of a variable.
+        Eg:<?TS version="2019 (19.0.0.170)"?>
+        <Prop Name='MyNumber' Type='Number' Flags='0x0'>
+        <Value>0</Value>
+        </Prop>
+
+    Returns:
+        dict: Python dictionary corresponding to the XML
+    """
+    tsxml_dict = xmltodict.parse(xml, postprocessor=postprocessor)
+    return tsxml_dict
 
 
 def postprocessor(path, key, value):
@@ -24,13 +40,8 @@ def postprocessor(path, key, value):
         elif data_type in ["Boolean"]:
             result = boolean.parse(path, key, value)
         elif data_type in ["Obj"]:
-            result = object.parse(path, key, value)
+            result = container.parse(path, key, value)
         elif data_type in ["Array"]:
             result = array.parse(path, key, value)
 
     return result["key"], result["value"]
-
-
-def parse(xml: str) -> dict:
-    tsxml_dict = xmltodict.parse(xml, postprocessor=postprocessor)
-    return tsxml_dict
