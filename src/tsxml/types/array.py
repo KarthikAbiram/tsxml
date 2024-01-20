@@ -9,8 +9,19 @@ def parse(path, key, value) -> dict:
     key_out = value["@Name"]
 
     # Parse value
-    items = value["Value"]
+    if "Value" in value.keys():
+        items = value["Value"]
+    else:
+        # No values, empty array
+        items = []
     value_out = []
+
+    # For arrays with single element, we will directly get dict instead of list of dict
+    if not isinstance(items, list):
+        # For those, make them list of dict
+        items = [items]
+
+    # Parse each element in the list
     for item in items:
         if "Prop" in item.keys():
             value_out.append(item["Prop"])

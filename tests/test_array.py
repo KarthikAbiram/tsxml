@@ -38,6 +38,66 @@ def test_numeric_array():
     assert result == exp_result
 
 
+def test_numeric_array_single_element():
+    xml_input = """
+    <?TS version="2019 (19.0.0.170)"?>
+    <Prop Name='MyContainer' Type='Obj' Flags='0x0'>
+        <Prop Name='MyNumericArray' Type='Array' LBound='[0]' HBound='[0]' ElementType='Number'
+        Flags='0x0'>
+            <Value ID='[0]'>0</Value>
+        </Prop>
+        <Prop Name='MyNumber' Type='Number' Flags='0x0'>
+            <Value>1</Value>
+        </Prop>
+        <Prop Name='MyString' Type='String' Flags='0x0'>
+            <Value>xTLDR.com</Value>
+        </Prop>
+    </Prop>
+    """
+    # Parse
+    result = main.parse(xml_input)
+    # pprint.pprint(result, indent=2)
+
+    exp_result = {
+        "MyContainer": {
+            "MyNumber": 1.0,
+            "MyNumericArray": [0.0],
+            "MyString": "xTLDR.com",
+        }
+    }
+
+    assert result == exp_result
+
+
+def test_numeric_array_empty():
+    xml_input = """
+    <?TS version="2019 (19.0.0.170)"?>
+        <Prop Name='MySimpleContainer' Type='Obj' Flags='0x0'>
+            <Prop Name='MyNum1' Type='Number' Flags='0x0'>
+                <Value>0</Value>
+            </Prop>
+                <Prop Name='MyStr1' Type='String' Flags='0x0'>
+            <Value></Value>
+            </Prop>
+                <Prop Name='EmptyNumArray' Type='Array' LBound='[0]' HBound='[]' ElementType='Number' Flags='0x0'>
+            </Prop>
+        </Prop>
+    """
+    # Parse
+    result = main.parse(xml_input)
+    pprint.pprint(result, indent=2)
+
+    # exp_result = {
+    #     "MyContainer": {
+    #         "MyNumber": 1.0,
+    #         "MyNumericArray": [0.0],
+    #         "MyString": "xTLDR.com",
+    #     }
+    # }
+
+    # assert result == exp_result
+
+
 def test_boolean_array():
     xml_input = """
     <?TS version="2019 (19.0.0.170)"?>
