@@ -1,4 +1,5 @@
 """ Module for parsing TestStand XML to Python dictionary"""
+
 import xmltodict
 
 from .types import container, array, string, number, boolean

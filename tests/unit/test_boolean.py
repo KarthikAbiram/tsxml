@@ -15,7 +15,12 @@ def test_boolean_true():
 def test_boolean_false():
     path = [("Prop", {"Flags": "0x0", "Name": "MyBoolean", "Type": "Boolean"})]
     key = "Prop"
-    value = {"@Flags": "0x0", "@Name": "MyBoolean", "@Type": "Boolean", "Value": "False"}
+    value = {
+        "@Flags": "0x0",
+        "@Name": "MyBoolean",
+        "@Type": "Boolean",
+        "Value": "False",
+    }
     result = boolean.parse(path, key, value)
 
     exp_result = {"key": "MyBoolean", "value": False}
