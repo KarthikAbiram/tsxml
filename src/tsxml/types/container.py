@@ -1,6 +1,3 @@
-import pprint
-
-
 def parse(path, key, value) -> dict:
     # Initialize result
     result = {"key": key, "value": value}
@@ -17,9 +14,7 @@ def parse(path, key, value) -> dict:
         value_out = value["Prop"]
     else:
         # If not, find all keys without @
-        value_out = {
-            k: v for k, v in value.items() if "@" not in k and k != "Attributes"
-        }
+        value_out = {k: v for k, v in value.items() if "@" not in k and k != "Attributes"}
 
     # Consolidate Result
     result["key"] = key_out

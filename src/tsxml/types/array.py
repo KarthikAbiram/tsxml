@@ -1,6 +1,3 @@
-import pprint
-
-
 def parse(path, key, value) -> dict:
     # Initialize result
     result = {"key": key, "value": value}

@@ -1,13 +1,15 @@
 [tool.poetry]
 name = "tsxml"
-version = "0.0.1"
+version = "0.0.2"
 description = "Parse TestStand XML to Python dictionary"
 authors = ["Karthik Abiram"]
+license = "MIT"
 readme = "README.md"
+repository = "https://github.com/KarthikAbiram/tsxml"
 packages = [{ include = "*", from = "src" }]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 xmltodict = "^0.13.0"
 
 [tool.poetry.group.dev.dependencies]
