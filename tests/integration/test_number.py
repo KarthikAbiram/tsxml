@@ -2,7 +2,7 @@ from tsxml import main
 import pprint
 
 
-def test_numeric():
+def test_number():
     input_xml = """
     <?TS version="2019 (19.0.0.170)"?>
     <Prop Name='MyNumber' Type='Number' Flags='0x0'>
