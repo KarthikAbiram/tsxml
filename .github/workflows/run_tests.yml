@@ -4,7 +4,7 @@ run-name: ${{ github.actor }} is running the tests
 on:
   push:
     branches:
-      - main
+      - *
 
 jobs:
   Run-Tests:

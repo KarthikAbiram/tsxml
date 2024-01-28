@@ -1,0 +1,41 @@
+name: Publish to Test PyPI
+run-name: ${{ github.actor }} is running the tests and publishing to test pypi
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Run-Tests:
+    runs-on: windows-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: |
+            3.12
+            3.11
+            3.10
+            3.9
+            3.8
+      - name: Set up Poetry and Tox
+        run: python -m pip install poetry tox
+      - name: Run tox
+        run: tox --parallel=auto --parallel-no-spinner
+      - name: Prepare package for release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          poetry run semantic-release publish
+      - name: Publish to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          repository_url: https://test.pypi.org/legacy/
