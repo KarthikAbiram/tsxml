@@ -3,8 +3,8 @@ run-name: ${{ github.actor }} is building package and publishing to public PyPI 
 
 on:
   push:
-    branches:
-      - release
+    tags:
+      - v*
 
 jobs:
   Build-and-Publish-to-PyPI:
