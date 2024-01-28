@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tsxml"
-version = "0.0.2"
+version = "0.1.0"
 description = "Parse TestStand XML to Python dictionary"
 authors = ["Karthik Abiram"]
 license = "MIT"
