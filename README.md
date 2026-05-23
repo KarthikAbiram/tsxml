@@ -31,5 +31,14 @@ result = tsxml.parse(input_xml)
 
 # result = {'MyContainer': {'MyNumber': 5.0, 'MyString': 'xTLDR.com', 'MyBoolean': True}}
 ```
+# Source
+Setup Source Code
+```
+uv python install 3.8.10
+pipx install tox==4.9.0
+poetry install
+tox
+```
+
 # License
 MIT License
