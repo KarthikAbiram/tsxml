@@ -8,7 +8,7 @@ def parse(path, key, value) -> dict:
     # Parse value
     value_out = value["Value"]
     # As bool("False") would return True in python, we use below method
-    if value_out == "True":
+    if value_out.lower() == "true":
         value_out = True
     else:
         value_out = False
